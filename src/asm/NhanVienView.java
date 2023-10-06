@@ -4,7 +4,16 @@
  */
 package asm;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -406,6 +415,45 @@ public class NhanVienView extends javax.swing.JFrame {
         clearForm();
     }//GEN-LAST:event_btnNewMouseClicked
 
+    public void ghiFile() throws IOException {
+        File file = new File("data.txt");
+        if (!file.exists()) {
+
+            //Kiểm tra sự tồn tại của file
+            file.createNewFile();//Tạo mới file
+
+        }
+
+        FileOutputStream fos = new FileOutputStream(file);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+        ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
+        for (NhanVien nhanVien : list) {
+            oos.writeObject(nhanVien);
+        }
+        oos.close();
+        fos.close();
+    }
+    
+    public void docFile() throws FileNotFoundException, IOException, ClassNotFoundException {
+        File file = new File("data.txt");
+        if (!file.exists()) {//Kiểm tra sự tồn tại của file
+            System.out.println("File này không tìm thấy");
+            return;
+        }
+        // Mo file
+        FileInputStream fis = new FileInputStream(file);
+        // Doc tung dong 
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        ArrayList<NhanVien> list = new ArrayList<>();
+        while (fis.available() > 0) {
+            list.add((NhanVien) ois.readObject());
+        }
+        ois.close();
+        fis.close();
+        loadData(list);
+
+    }
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSaveMouseClicked
@@ -430,7 +478,13 @@ public class NhanVienView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOpenMouseClicked
 
     private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            ghiFile();
+        } catch (IOException ex) {
+            Logger.getLogger(NhanVienView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.exit(0);
     }//GEN-LAST:event_btnExitMouseClicked
 
     private void btnDauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDauMouseClicked
@@ -518,8 +572,9 @@ public class NhanVienView extends javax.swing.JFrame {
         txtTuoi.setText(tuoi);
         String email = (String) tblNhanVien.getValueAt(i, 3);
         txtEmail.setText(email);
-        String luong = (String) tblNhanVien.getValueAt(i, 4);
-        txtLuong.setText(luong);
+        Double luong = (Double) tblNhanVien.getValueAt(i, 4);
+        String luongNV = String.valueOf(luong);
+        txtLuong.setText(luongNV);
     }//GEN-LAST:event_tblNhanVienMouseClicked
 
     /**
