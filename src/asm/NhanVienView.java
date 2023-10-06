@@ -435,18 +435,76 @@ public class NhanVienView extends javax.swing.JFrame {
 
     private void btnDauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDauMouseClicked
         // TODO add your handling code here:
+        int i = tblNhanVien.getRowCount();
+        tblNhanVien.setRowSelectionInterval(0, 0);
+        String maNV = (String) tblNhanVien.getValueAt(0, 0);
+        txtMaNhanVien.setText(maNV);
+        String hoTen = (String) tblNhanVien.getValueAt(0, 1);
+        txtHoTen.setText(hoTen);
+        String tuoi = (String) tblNhanVien.getValueAt(0, 2);
+        txtTuoi.setText(tuoi);
+        String email = (String) tblNhanVien.getValueAt(0, 3);
+        txtEmail.setText(email);
+        Double luong = (Double) tblNhanVien.getValueAt(0, 4);
+        String luongNV = String.valueOf(luong);
+        txtLuong.setText(luongNV);
     }//GEN-LAST:event_btnDauMouseClicked
 
     private void btnPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrevMouseClicked
         // TODO add your handling code here:
+        int i = tblNhanVien.getSelectedRow();
+        if (i > 0) {
+            tblNhanVien.setRowSelectionInterval(i - 1, i - 1);
+
+            String maNV = (String) tblNhanVien.getValueAt(i, 0);
+            txtMaNhanVien.setText(maNV);
+            String hoTen = (String) tblNhanVien.getValueAt(i, 1);
+            txtHoTen.setText(hoTen);
+            String tuoi = (String) tblNhanVien.getValueAt(i, 2);
+            txtTuoi.setText(tuoi);
+            String email = (String) tblNhanVien.getValueAt(i, 3);
+            txtEmail.setText(email);
+            Double luong = (Double) tblNhanVien.getValueAt(i, 4);
+            String luongNV = String.valueOf(luong);
+            txtLuong.setText(luongNV);
+        }
     }//GEN-LAST:event_btnPrevMouseClicked
 
     private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
         // TODO add your handling code here:
+        int i = tblNhanVien.getSelectedRow();
+        if (i < tblNhanVien.getRowCount()-1) {
+            tblNhanVien.setRowSelectionInterval(i + 1, i + 1);
+
+            String maNV = (String) tblNhanVien.getValueAt(i, 0);
+            txtMaNhanVien.setText(maNV);
+            String hoTen = (String) tblNhanVien.getValueAt(i, 1);
+            txtHoTen.setText(hoTen);
+            String tuoi = (String) tblNhanVien.getValueAt(i, 2);
+            txtTuoi.setText(tuoi);
+            String email = (String) tblNhanVien.getValueAt(i, 3);
+            txtEmail.setText(email);
+            Double luong = (Double) tblNhanVien.getValueAt(i, 4);
+            String luongNV = String.valueOf(luong);
+            txtLuong.setText(luongNV);
+        }
     }//GEN-LAST:event_btnNextMouseClicked
 
     private void btnCuoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCuoiMouseClicked
         // TODO add your handling code here:
+        int i = tblNhanVien.getRowCount() - 1;
+        tblNhanVien.setRowSelectionInterval(i, i);
+        String maNV = (String) tblNhanVien.getValueAt(i, 0);
+        txtMaNhanVien.setText(maNV);
+        String hoTen = (String) tblNhanVien.getValueAt(i, 1);
+        txtHoTen.setText(hoTen);
+        String tuoi = (String) tblNhanVien.getValueAt(i, 2);
+        txtTuoi.setText(tuoi);
+        String email = (String) tblNhanVien.getValueAt(i, 3);
+        txtEmail.setText(email);
+        Double luong = (Double) tblNhanVien.getValueAt(i, 4);
+        String luongNV = String.valueOf(luong);
+        txtLuong.setText(luongNV);
     }//GEN-LAST:event_btnCuoiMouseClicked
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
