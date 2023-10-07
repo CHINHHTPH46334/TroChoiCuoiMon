@@ -462,14 +462,23 @@ public class NhanVienView extends javax.swing.JFrame {
         String tuoi = txtTuoi.getText();
         String email = txtEmail.getText();
         String luong = txtLuong.getText();
-        String ma = (String) tblNhanVien.getValueAt(i, 0);
-        System.out.println(ma);
-//        Boolean check = quanLyNhanVien.tim(maNV);
-//        if (maNV.isEmpty()) {
-//            JOptionPane.showConfirmDialog(this, "Xin nhập mã");
-//        } else if (check) {
-//            JOptionPane.showConfirmDialog(this, "Mã trùng xin nhập lại");
-//        }
+        Double luongNV = Double.valueOf(luong);
+
+        NhanVien nhanVien = new NhanVien(maNV, tenNV, tuoi, email, luongNV);
+        Boolean check = quanLyNhanVien.checkma(maNV);
+        if (maNV.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Xin nhập mã");
+        } else if (check) {
+            JOptionPane.showMessageDialog(this, "Mã trùng xin nhập lại");
+        } else if (check == false) {
+            Boolean checkCapNhat = quanLyNhanVien.capNhatSave(i, nhanVien);
+            if (checkCapNhat) {
+                JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+                loadData(quanLyNhanVien.getListNhanVien());
+
+            }
+        }
+
     }//GEN-LAST:event_btnSaveMouseClicked
 
     private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
@@ -497,6 +506,17 @@ public class NhanVienView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Khong thay nhan vien");
         } else {
             loadData(result);
+            String maNV = (String) tblNhanVien.getValueAt(0, 0);
+            txtMaNhanVien.setText(maNV);
+            String hoTen = (String) tblNhanVien.getValueAt(0, 1);
+            txtHoTen.setText(hoTen);
+            String tuoi = (String) tblNhanVien.getValueAt(0, 2);
+            txtTuoi.setText(tuoi);
+            String email = (String) tblNhanVien.getValueAt(0, 3);
+            txtEmail.setText(email);
+            Double luong = (Double) tblNhanVien.getValueAt(0, 4);
+            String luongNV = String.valueOf(luong);
+            txtLuong.setText(luongNV);
         }
     }//GEN-LAST:event_btnFindMouseClicked
 

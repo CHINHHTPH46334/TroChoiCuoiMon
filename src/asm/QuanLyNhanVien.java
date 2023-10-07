@@ -34,13 +34,18 @@ public class QuanLyNhanVien {
         }
         return listResult;
     }
-    Boolean tim(String maCanTim) {
-        String ma = "";
+    
+    Boolean checkma(String ma){
         for (NhanVien nhanVien : listNhanVien) {
-            if (nhanVien.getMaNhanVien().equals(maCanTim)) {
-                ma = maCanTim;
+            if (nhanVien.getMaNhanVien().equals(ma)) {
+                
             }
         }
+        return true;
+    }
+    
+    Boolean capNhatSave(int vitri, NhanVien nhanVienNew){
+        listNhanVien.set(vitri, nhanVienNew);
         return true;
     }
 
