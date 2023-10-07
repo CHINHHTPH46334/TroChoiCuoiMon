@@ -4,11 +4,13 @@
  */
 package asm;
 
+import java.io.Serializable;
+
 /**
  *
  * @author admin
  */
-public class NhanVien {
+public class NhanVien implements Serializable {
     private String maNhanVien;
     private String hoVaTen;
     private String tuoi;

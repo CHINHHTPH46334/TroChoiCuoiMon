@@ -434,7 +434,7 @@ public class NhanVienView extends javax.swing.JFrame {
         oos.close();
         fos.close();
     }
-    
+
     public void docFile() throws FileNotFoundException, IOException, ClassNotFoundException {
         File file = new File("data.txt");
         if (!file.exists()) {//Kiểm tra sự tồn tại của file
@@ -456,10 +456,37 @@ public class NhanVienView extends javax.swing.JFrame {
     }
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
         // TODO add your handling code here:
+        int i = tblNhanVien.getRowCount();
+        String maNV = txtMaNhanVien.getText();
+        String tenNV = txtHoTen.getText();
+        String tuoi = txtTuoi.getText();
+        String email = txtEmail.getText();
+        String luong = txtLuong.getText();
+        String ma = (String) tblNhanVien.getValueAt(i, 0);
+        System.out.println(ma);
+//        Boolean check = quanLyNhanVien.tim(maNV);
+//        if (maNV.isEmpty()) {
+//            JOptionPane.showConfirmDialog(this, "Xin nhập mã");
+//        } else if (check) {
+//            JOptionPane.showConfirmDialog(this, "Mã trùng xin nhập lại");
+//        }
     }//GEN-LAST:event_btnSaveMouseClicked
 
     private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
         // TODO add your handling code here:
+        String maNV = txtMaNhanVien.getText();
+        if (maNV.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Xin nhập mã nhân viên");
+        } else {
+            ArrayList<NhanVien> sauKhiXoa = quanLyNhanVien.delete(maNV);
+            if (sauKhiXoa.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không có người này trong danh sách");
+            } else {
+                JOptionPane.showMessageDialog(this, "Xoá thành công");
+                loadData(sauKhiXoa);
+            }
+        }
+
     }//GEN-LAST:event_btnDeleteMouseClicked
 
     private void btnFindMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFindMouseClicked
@@ -481,8 +508,10 @@ public class NhanVienView extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             ghiFile();
+
         } catch (IOException ex) {
             Logger.getLogger(NhanVienView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Lỗi khi ghi dữ liệu");
         }
         System.exit(0);
     }//GEN-LAST:event_btnExitMouseClicked
@@ -527,7 +556,7 @@ public class NhanVienView extends javax.swing.JFrame {
     private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
         // TODO add your handling code here:
         int i = tblNhanVien.getSelectedRow();
-        if (i < tblNhanVien.getRowCount()-1) {
+        if (i < tblNhanVien.getRowCount() - 1) {
             tblNhanVien.setRowSelectionInterval(i + 1, i + 1);
 
             String maNV = (String) tblNhanVien.getValueAt(i, 0);

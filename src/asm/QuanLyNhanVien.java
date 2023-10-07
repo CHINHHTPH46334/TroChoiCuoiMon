@@ -34,5 +34,28 @@ public class QuanLyNhanVien {
         }
         return listResult;
     }
+    Boolean tim(String maCanTim) {
+        String ma = "";
+        for (NhanVien nhanVien : listNhanVien) {
+            if (nhanVien.getMaNhanVien().equals(maCanTim)) {
+                ma = maCanTim;
+            }
+        }
+        return true;
+    }
 
+    ArrayList<NhanVien> delete(String maNV){
+        ArrayList<NhanVien> listSauKhiXoa = new ArrayList<>();
+        for (NhanVien nhanVien : listNhanVien) {
+            if (nhanVien.getMaNhanVien().equals(maNV)) {
+                listSauKhiXoa.remove(nhanVien);
+            } else {
+                listSauKhiXoa.add(nhanVien);
+            }
+        }
+        
+        
+        
+        return listSauKhiXoa;
+    }
 }
