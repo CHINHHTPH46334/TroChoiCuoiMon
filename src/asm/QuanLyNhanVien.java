@@ -5,6 +5,8 @@
 package asm;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,22 +36,42 @@ public class QuanLyNhanVien {
         }
         return listResult;
     }
-    
-    Boolean checkma(String ma){
-        for (NhanVien nhanVien : listNhanVien) {
-            if (nhanVien.getMaNhanVien().equals(ma)) {
-                
-            }
-        }
-        return true;
-    }
-    
-    Boolean capNhatSave(int vitri, NhanVien nhanVienNew){
-        listNhanVien.set(vitri, nhanVienNew);
+
+    Boolean addNhanVien(NhanVien nhanVien) {
+        listNhanVien.add(nhanVien);
         return true;
     }
 
-    ArrayList<NhanVien> delete(String maNV){
+    Boolean checkma(NhanVien nhanVien1) {
+        for (NhanVien nhanVien : listNhanVien) {
+            if (nhanVien.getMaNhanVien().equals(nhanVien1.getMaNhanVien())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    Boolean capNhatSave(int vitri, NhanVien nhanVienNew) {
+        if (vitri >= 0 && vitri < listNhanVien.size()) {
+            NhanVien nhanVienCu = listNhanVien.get(vitri);
+
+            if (nhanVienCu.getMaNhanVien().equals(nhanVienNew.getMaNhanVien())
+                    && nhanVienCu.getHoVaTen().equals(nhanVienNew.getHoVaTen())
+                    && nhanVienCu.getTuoi().equals(nhanVienNew.getTuoi())
+                    && nhanVienCu.getEmail().equals(nhanVienNew.getEmail())
+                    && Objects.equals(nhanVienCu.getLuong(), nhanVienNew.getLuong())) {
+
+                return false;
+            }
+
+            listNhanVien.set(vitri, nhanVienNew);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    ArrayList<NhanVien> delete(String maNV) {
         ArrayList<NhanVien> listSauKhiXoa = new ArrayList<>();
         for (NhanVien nhanVien : listNhanVien) {
             if (nhanVien.getMaNhanVien().equals(maNV)) {
@@ -58,9 +80,7 @@ public class QuanLyNhanVien {
                 listSauKhiXoa.add(nhanVien);
             }
         }
-        
-        
-        
+
         return listSauKhiXoa;
     }
 }
