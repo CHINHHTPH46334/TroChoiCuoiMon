@@ -34,7 +34,7 @@ public class NhanVienView extends javax.swing.JFrame {
     public NhanVienView() {
         initComponents();
         setLocationRelativeTo(null);
-        ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
+        
        
     }
     
@@ -507,11 +507,8 @@ public class NhanVienView extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(this, "Cập nhật thành công");
                             loadData(quanLyNhanVien.getListNhanVien());
                         } else {
-                            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra khi cập nhật.");
+                            JOptionPane.showMessageDialog(this, "Mã trùng, không thực hiện cập nhật.");
                         }
-                    } else {
-                        // Các thuộc tính không thay đổi, hiển thị thông báo mã trùng
-                        JOptionPane.showMessageDialog(this, "Mã trùng, không thực hiện cập nhật.");
                     }
                 }
             } else {
@@ -568,7 +565,8 @@ public class NhanVienView extends javax.swing.JFrame {
 
     private void btnOpenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOpenMouseClicked
         // TODO add your handling code here:
-         loadData(list);
+        ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
+        loadData(list);
 
     }//GEN-LAST:event_btnOpenMouseClicked
 

@@ -71,6 +71,14 @@ public class QuanLyNhanVien {
         }
     }
 
+//    if (nhanVienCu.getMaNhanVien().equals(nhanVienNew.getMaNhanVien())
+//                    && nhanVienCu.getHoVaTen().equals(nhanVienNew.getHoVaTen())
+//                    && nhanVienCu.getTuoi().equals(nhanVienNew.getTuoi())
+//                    && nhanVienCu.getEmail().equals(nhanVienNew.getEmail())
+//                    && Objects.equals(nhanVienCu.getLuong(), nhanVienNew.getLuong())) {
+//
+//                return false;
+//            }
     ArrayList<NhanVien> delete(String maNV) {
         ArrayList<NhanVien> listSauKhiXoa = new ArrayList<>();
         for (NhanVien nhanVien : listNhanVien) {
