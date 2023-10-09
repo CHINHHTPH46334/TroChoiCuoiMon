@@ -76,23 +76,30 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtHoTen" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          <Component id="txtEmail" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          <Component id="txtMaNhanVien" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
-                          <Component id="txtTuoi" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
-                          <Component id="txtLuong" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtHoTen" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="txtEmail" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="txtMaNhanVien" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
+                                  <Component id="txtTuoi" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
+                                  <Component id="txtLuong" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
+                                  <Component id="lblQuanLyNhanVien" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jPanel1" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblTime" alignment="1" min="-2" pref="92" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                               <Component id="btnNext" min="-2" pref="47" max="-2" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="btnCuoi" min="-2" pref="48" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="lblRecord" min="-2" pref="132" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="lblQuanLyNhanVien" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTime" alignment="1" min="-2" pref="92" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jScrollPane2" min="-2" pref="514" max="-2" attributes="0"/>
@@ -154,6 +161,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnCuoi" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnNext" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblRecord" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -436,6 +444,17 @@
           <Color blue="33" green="0" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="00:00 AM"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblRecord">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="14" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Record:"/>
       </Properties>
     </Component>
   </SubComponents>
