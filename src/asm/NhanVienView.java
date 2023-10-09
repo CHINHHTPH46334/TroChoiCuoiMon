@@ -35,7 +35,7 @@ public class NhanVienView extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
-        loadData(list);
+       
     }
     
     void loadData(ArrayList<NhanVien> list) {
@@ -568,6 +568,8 @@ public class NhanVienView extends javax.swing.JFrame {
 
     private void btnOpenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOpenMouseClicked
         // TODO add your handling code here:
+         loadData(list);
+
     }//GEN-LAST:event_btnOpenMouseClicked
 
     private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
