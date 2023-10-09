@@ -27,17 +27,18 @@ public class NhanVienView extends javax.swing.JFrame {
     /**
      * Creates new form ThongTinNhanVienView
      */
-    ArrayList<NhanVien> list = new ArrayList<>();
+//    ArrayList<NhanVien> list = new ArrayList<>();
     DefaultTableModel dTM;
     QuanLyNhanVien quanLyNhanVien = new QuanLyNhanVien();
     private int i = -1;
+    ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
+
     public NhanVienView() {
         initComponents();
         setLocationRelativeTo(null);
-        
-       
+
     }
-    
+
     void loadData(ArrayList<NhanVien> list) {
         dTM = (DefaultTableModel) tblNhanVien.getModel();
         dTM.setRowCount(0);
@@ -51,7 +52,7 @@ public class NhanVienView extends javax.swing.JFrame {
             });
         }
     }
-    
+
     public void clearForm() {
         txtHoTen.setText("");
         txtEmail.setText("");
@@ -59,8 +60,6 @@ public class NhanVienView extends javax.swing.JFrame {
         txtMaNhanVien.setText("");
         txtTuoi.setText("");
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -436,7 +435,7 @@ public class NhanVienView extends javax.swing.JFrame {
         // TODO add your handling code here:
         clearForm();
     }//GEN-LAST:event_btnNewMouseClicked
-    
+
     public void ghiFile() throws IOException {
         File file = new File("data.txt");
         if (!file.exists()) {
@@ -445,18 +444,18 @@ public class NhanVienView extends javax.swing.JFrame {
             file.createNewFile();//Tạo mới file
 
         }
-        
+
         FileOutputStream fos = new FileOutputStream(file);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        
-        ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
+
+//        ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
         for (NhanVien nhanVien : list) {
             oos.writeObject(nhanVien);
         }
         oos.close();
         fos.close();
     }
-    
+
     public void docFile() throws FileNotFoundException, IOException, ClassNotFoundException {
         File file = new File("data.txt");
         if (!file.exists()) {//Kiểm tra sự tồn tại của file
@@ -474,7 +473,7 @@ public class NhanVienView extends javax.swing.JFrame {
         ois.close();
         fis.close();
         loadData(list);
-        
+
     }
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
         // TODO add your handling code here:
@@ -484,7 +483,7 @@ public class NhanVienView extends javax.swing.JFrame {
         String tuoi = txtTuoi.getText();
         String email = txtEmail.getText();
         String luong = txtLuong.getText();
-        
+
         if (maNV.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Xin nhập mã");
         } else {
@@ -494,7 +493,7 @@ public class NhanVienView extends javax.swing.JFrame {
             } else {
                 luongNV = 0;
             }
-            
+
             NhanVien nhanVien = new NhanVien(maNV, tenNV, tuoi, email, luongNV);
 
             // Kiểm tra mã trùng
@@ -513,17 +512,17 @@ public class NhanVienView extends javax.swing.JFrame {
                 // Kiểm tra các thuộc tính khác có thay đổi hay không
                 if (index != -1) {
                     NhanVien existingNhanVien = quanLyNhanVien.getListNhanVien().get(index);
-                    
+
                     if (!nhanVien.equals(existingNhanVien)) {
                         // Có ít nhất một thuộc tính khác thay đổi, cho phép cập nhật
                         Boolean checkCapNhat = quanLyNhanVien.capNhatSave(index, nhanVien);
                         if (checkCapNhat) {
                             JOptionPane.showMessageDialog(this, "Cập nhật thành công");
                             loadData(quanLyNhanVien.getListNhanVien());
-                            
+
                         } else {
                             JOptionPane.showMessageDialog(this, "Mã trùng, không thực hiện cập nhật.");
-                            
+
                         }
                     }
                 }
@@ -533,12 +532,12 @@ public class NhanVienView extends javax.swing.JFrame {
                 if (checkAdd) {
                     JOptionPane.showMessageDialog(this, "Thêm nhân viên mới thành công");
                     loadData(quanLyNhanVien.getListNhanVien());
-                    
+
                 }
-                
+
             }
         }
-        
+
     }//GEN-LAST:event_btnSaveMouseClicked
 
     private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
@@ -546,16 +545,16 @@ public class NhanVienView extends javax.swing.JFrame {
         String maNV = txtMaNhanVien.getText();
         if (maNV.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Xin nhập mã nhân viên");
-            
+
         } else {
             ArrayList<NhanVien> sauKhiXoa = quanLyNhanVien.delete(maNV);
             if (sauKhiXoa.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Không có người này trong danh sách");
-                
+
             } else {
                 JOptionPane.showMessageDialog(this, "Xoá thành công");
                 loadData(sauKhiXoa);
-                
+
             }
         }
 
@@ -567,7 +566,7 @@ public class NhanVienView extends javax.swing.JFrame {
         ArrayList<NhanVien> result = quanLyNhanVien.search(maCanTim);
         if (result.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Khong thay nhan vien");
-            
+
         } else {
             loadData(result);
             String maNV = (String) tblNhanVien.getValueAt(0, 0);
@@ -581,15 +580,23 @@ public class NhanVienView extends javax.swing.JFrame {
             Double luong = (Double) tblNhanVien.getValueAt(0, 4);
             String luongNV = String.valueOf(luong);
             txtLuong.setText(luongNV);
-            
+
         }
     }//GEN-LAST:event_btnFindMouseClicked
 
     private void btnOpenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOpenMouseClicked
-        // TODO add your handling code here:
-        ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
-        loadData(list);
+        try {
+            // TODO add your handling code here:
+//        ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
+            docFile();
+            loadData(list);
+        } catch (IOException ex) {
+            Logger.getLogger(NhanVienView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NhanVienView.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+
 
     }//GEN-LAST:event_btnOpenMouseClicked
 
@@ -597,7 +604,7 @@ public class NhanVienView extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             ghiFile();
-            
+
         } catch (IOException ex) {
             Logger.getLogger(NhanVienView.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Lỗi khi ghi dữ liệu");
@@ -607,102 +614,76 @@ public class NhanVienView extends javax.swing.JFrame {
 
     private void btnDauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDauMouseClicked
         // TODO add your handling code here:
-        int i = tblNhanVien.getRowCount();
-        tblNhanVien.setRowSelectionInterval(0, 0);
-        String maNV = (String) tblNhanVien.getValueAt(0, 0);
-        txtMaNhanVien.setText(maNV);
-        String hoTen = (String) tblNhanVien.getValueAt(0, 1);
-        txtHoTen.setText(hoTen);
-        String tuoi = (String) tblNhanVien.getValueAt(0, 2);
-        txtTuoi.setText(tuoi);
-        String email = (String) tblNhanVien.getValueAt(0, 3);
-        txtEmail.setText(email);
-        Double luong = (Double) tblNhanVien.getValueAt(0, 4);
-        String luongNV = String.valueOf(luong);
-        txtLuong.setText(luongNV);
-        lblRecord.setText("Record: " + 1 + "/" + quanLyNhanVien.getListNhanVien().size());
+        
+        if (list.size() != 0) {
+          
+            tblNhanVien.setRowSelectionInterval(0, 0);
+            txtMaNhanVien.setText(list.get(0).getMaNhanVien());
+            txtHoTen.setText(list.get(0).getHoVaTen());
+            txtEmail.setText(list.get(0).getEmail());
+            txtTuoi.setText(String.valueOf(list.get(0).getTuoi()));
+            txtLuong.setText(String.valueOf(list.get(0).getLuong()));
+            lblRecord.setText("Record: " + 1 + "/" + quanLyNhanVien.getListNhanVien().size());
+        }
     }//GEN-LAST:event_btnDauMouseClicked
 
     private void btnPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrevMouseClicked
         // TODO add your handling code here:
         int i = tblNhanVien.getSelectedRow();
         if (i > 0) {
-            tblNhanVien.setRowSelectionInterval(i - 1, i - 1);
-            
-            String maNV = (String) tblNhanVien.getValueAt(i, 0);
-            txtMaNhanVien.setText(maNV);
-            String hoTen = (String) tblNhanVien.getValueAt(i, 1);
-            txtHoTen.setText(hoTen);
-            String tuoi = (String) tblNhanVien.getValueAt(i, 2);
-            txtTuoi.setText(tuoi);
-            String email = (String) tblNhanVien.getValueAt(i, 3);
-            txtEmail.setText(email);
-            Double luong = (Double) tblNhanVien.getValueAt(i, 4);
-            String luongNV = String.valueOf(luong);
-            txtLuong.setText(luongNV);
-            
+            i--;
+            tblNhanVien.setRowSelectionInterval(i, i);
+
+            txtMaNhanVien.setText(list.get(i).getMaNhanVien());
+            txtHoTen.setText(list.get(i).getHoVaTen());
+            txtEmail.setText(list.get(i).getEmail());
+            txtTuoi.setText(String.valueOf(list.get(i).getTuoi()));
+            txtLuong.setText(String.valueOf(list.get(i).getLuong()));
+            lblRecord.setText("Record: " + (i + 1) + "/" + quanLyNhanVien.getListNhanVien().size());
         }
-        
+
     }//GEN-LAST:event_btnPrevMouseClicked
 
     private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
         // TODO add your handling code here:
         int i = tblNhanVien.getSelectedRow();
         if (i < tblNhanVien.getRowCount() - 1) {
-            tblNhanVien.setRowSelectionInterval(i + 1, i + 1);
-            
-            String maNV = (String) tblNhanVien.getValueAt(i, 0);
-            txtMaNhanVien.setText(maNV);
-            String hoTen = (String) tblNhanVien.getValueAt(i, 1);
-            txtHoTen.setText(hoTen);
-            String tuoi = (String) tblNhanVien.getValueAt(i, 2);
-            txtTuoi.setText(tuoi);
-            String email = (String) tblNhanVien.getValueAt(i, 3);
-            txtEmail.setText(email);
-            Double luong = (Double) tblNhanVien.getValueAt(i, 4);
-            String luongNV = String.valueOf(luong);
-            txtLuong.setText(luongNV);
+            i++;
+            tblNhanVien.setRowSelectionInterval(i , i );
+
+            txtMaNhanVien.setText(list.get(i).getMaNhanVien());
+            txtHoTen.setText(list.get(i).getHoVaTen());
+            txtEmail.setText(list.get(i).getEmail());
+            txtTuoi.setText(String.valueOf(list.get(i).getTuoi()));
+            txtLuong.setText(String.valueOf(list.get(i).getLuong()));
             lblRecord.setText("Record: " + (i + 1) + "/" + quanLyNhanVien.getListNhanVien().size());
         }
-        
+
     }//GEN-LAST:event_btnNextMouseClicked
 
     private void btnCuoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCuoiMouseClicked
         // TODO add your handling code here:
         int i = tblNhanVien.getRowCount() - 1;
-        tblNhanVien.setRowSelectionInterval(i, i);
-        String maNV = (String) tblNhanVien.getValueAt(i, 0);
-        txtMaNhanVien.setText(maNV);
-        String hoTen = (String) tblNhanVien.getValueAt(i, 1);
-        txtHoTen.setText(hoTen);
-        String tuoi = (String) tblNhanVien.getValueAt(i, 2);
-        txtTuoi.setText(tuoi);
-        String email = (String) tblNhanVien.getValueAt(i, 3);
-        txtEmail.setText(email);
-        Double luong = (Double) tblNhanVien.getValueAt(i, 4);
-        String luongNV = String.valueOf(luong);
-        txtLuong.setText(luongNV);
+        txtMaNhanVien.setText(list.get(i).getMaNhanVien());
+        txtHoTen.setText(list.get(i).getHoVaTen());
+        txtEmail.setText(list.get(i).getEmail());
+        txtTuoi.setText(String.valueOf(list.get(i).getTuoi()));
+        txtLuong.setText(String.valueOf(list.get(i).getLuong()));
         lblRecord.setText("Record: " + (i + 1) + "/" + quanLyNhanVien.getListNhanVien().size());
     }//GEN-LAST:event_btnCuoiMouseClicked
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
         // TODO add your handling code here:
         int i = tblNhanVien.getSelectedRow();
-        String maNV = (String) tblNhanVien.getValueAt(i, 0);
-        txtMaNhanVien.setText(maNV);
-        String hoTen = (String) tblNhanVien.getValueAt(i, 1);
-        txtHoTen.setText(hoTen);
-        String tuoi = (String) tblNhanVien.getValueAt(i, 2);
-        txtTuoi.setText(tuoi);
-        String email = (String) tblNhanVien.getValueAt(i, 3);
-        txtEmail.setText(email);
-        Double luong = (Double) tblNhanVien.getValueAt(i, 4);
-        String luongNV = String.valueOf(luong);
-        txtLuong.setText(luongNV);
+        txtMaNhanVien.setText(list.get(i).getMaNhanVien());
+        txtHoTen.setText(list.get(i).getHoVaTen());
+        txtEmail.setText(list.get(i).getEmail());
+        txtTuoi.setText(String.valueOf(list.get(i).getTuoi()));
+        txtLuong.setText(String.valueOf(list.get(i).getLuong()));
         lblRecord.setText("Record: " + (i + 1) + "/" + quanLyNhanVien.getListNhanVien().size());
     }//GEN-LAST:event_tblNhanVienMouseClicked
 
-    
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         ClockThread clockThread = new ClockThread(lblTime);
