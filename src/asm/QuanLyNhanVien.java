@@ -6,6 +6,8 @@ package asm;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +17,7 @@ import javax.swing.JOptionPane;
 public class QuanLyNhanVien {
 
     ArrayList<NhanVien> listNhanVien = new ArrayList<>();
+    private static final String P_EMAIL = "^[A-Za-z0-9+_.-]+@(.+)$";
 
     public QuanLyNhanVien() {
         listNhanVien.add(new NhanVien("NV01", "Nguyễn Hữu Nghĩa", "23", "nghianhph46340@gmail.com", 9999999.87878));
@@ -71,14 +74,15 @@ public class QuanLyNhanVien {
         }
     }
 
-//    if (nhanVienCu.getMaNhanVien().equals(nhanVienNew.getMaNhanVien())
-//                    && nhanVienCu.getHoVaTen().equals(nhanVienNew.getHoVaTen())
-//                    && nhanVienCu.getTuoi().equals(nhanVienNew.getTuoi())
-//                    && nhanVienCu.getEmail().equals(nhanVienNew.getEmail())
-//                    && Objects.equals(nhanVienCu.getLuong(), nhanVienNew.getLuong())) {
-//
-//                return false;
-//            }
+    public static Boolean checkEmail(String email) {
+        if (email == null) {
+            return false;
+        }
+        Pattern pattern = Pattern.compile(P_EMAIL);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
     ArrayList<NhanVien> delete(String maNV) {
         ArrayList<NhanVien> listSauKhiXoa = new ArrayList<>();
         for (NhanVien nhanVien : listNhanVien) {

@@ -22,7 +22,7 @@ public class ClockThread implements Runnable {
     public void run() {
         while (true) {
             Date now = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss aa");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm aa");
             clockLabel.setText(dateFormat.format(now));
             try {
                 Thread.sleep(1000);

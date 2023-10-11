@@ -334,6 +334,14 @@ public class NhanVienView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCuoi, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -344,15 +352,9 @@ public class NhanVienView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCuoi, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(lblTime)
+                                        .addGap(16, 16, 16))))))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
@@ -434,6 +436,7 @@ public class NhanVienView extends javax.swing.JFrame {
     private void btnNewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewMouseClicked
         // TODO add your handling code here:
         clearForm();
+        loadData(list);
     }//GEN-LAST:event_btnNewMouseClicked
 
     public void ghiFile() throws IOException {
@@ -483,16 +486,23 @@ public class NhanVienView extends javax.swing.JFrame {
         String tuoi = txtTuoi.getText();
         String email = txtEmail.getText();
         String luong = txtLuong.getText();
-
-        if (maNV.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Xin nhập mã");
+        Integer tuoiNV = Integer.parseInt(tuoi);
+        double luongNV;
+        if (!luong.isEmpty()) {
+            luongNV = Double.parseDouble(luong);
         } else {
-            double luongNV;
-            if (!luong.isEmpty()) {
-                luongNV = Double.parseDouble(luong);
-            } else {
-                luongNV = 0;
-            }
+            luongNV = 0;
+        }
+
+        Boolean checkmail = quanLyNhanVien.checkEmail(email);
+
+        if (maNV.isEmpty()
+                && (tuoiNV >= 16 && tuoiNV <= 55)
+                && luongNV > 5000000) {
+            JOptionPane.showMessageDialog(this, "Xin nhập mã");
+        } else if (!checkmail) {
+            JOptionPane.showMessageDialog(this, "Sai định dạng email!");
+        } else {
 
             NhanVien nhanVien = new NhanVien(maNV, tenNV, tuoi, email, luongNV);
 
@@ -538,6 +548,8 @@ public class NhanVienView extends javax.swing.JFrame {
             }
         }
 
+        lblRecord.setText("Record: " + 1 + "/" + quanLyNhanVien.getListNhanVien().size());
+
     }//GEN-LAST:event_btnSaveMouseClicked
 
     private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
@@ -564,8 +576,10 @@ public class NhanVienView extends javax.swing.JFrame {
         // TODO add your handling code here:
         String maCanTim = txtMaNhanVien.getText();
         ArrayList<NhanVien> result = quanLyNhanVien.search(maCanTim);
-        if (result.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Khong thay nhan vien");
+        if (maCanTim.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Xin nhập mã");
+        } else if (result.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không thấy nhân viên");
 
         } else {
             loadData(result);
@@ -590,12 +604,18 @@ public class NhanVienView extends javax.swing.JFrame {
 //        ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
             docFile();
             loadData(list);
+            tblNhanVien.setRowSelectionInterval(0, 0);
+            txtMaNhanVien.setText(list.get(0).getMaNhanVien());
+            txtHoTen.setText(list.get(0).getHoVaTen());
+            txtEmail.setText(list.get(0).getEmail());
+            txtTuoi.setText(String.valueOf(list.get(0).getTuoi()));
+            txtLuong.setText(String.valueOf(list.get(0).getLuong()));
+            lblRecord.setText("Record: " + 1 + "/" + quanLyNhanVien.getListNhanVien().size());
         } catch (IOException ex) {
             Logger.getLogger(NhanVienView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(NhanVienView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
 
 
     }//GEN-LAST:event_btnOpenMouseClicked
@@ -604,19 +624,19 @@ public class NhanVienView extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             ghiFile();
-
+            System.exit(0);
         } catch (IOException ex) {
             Logger.getLogger(NhanVienView.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Lỗi khi ghi dữ liệu");
         }
-        System.exit(0);
+
     }//GEN-LAST:event_btnExitMouseClicked
 
     private void btnDauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDauMouseClicked
         // TODO add your handling code here:
-        
+
         if (list.size() != 0) {
-          
+
             tblNhanVien.setRowSelectionInterval(0, 0);
             txtMaNhanVien.setText(list.get(0).getMaNhanVien());
             txtHoTen.setText(list.get(0).getHoVaTen());
@@ -649,7 +669,7 @@ public class NhanVienView extends javax.swing.JFrame {
         int i = tblNhanVien.getSelectedRow();
         if (i < tblNhanVien.getRowCount() - 1) {
             i++;
-            tblNhanVien.setRowSelectionInterval(i , i );
+            tblNhanVien.setRowSelectionInterval(i, i);
 
             txtMaNhanVien.setText(list.get(i).getMaNhanVien());
             txtHoTen.setText(list.get(i).getHoVaTen());
