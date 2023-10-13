@@ -4,6 +4,11 @@
  */
 package asm;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -38,6 +43,41 @@ public class QuanLyNhanVien {
             }
         }
         return listResult;
+    }
+    
+    public String ghiFile(String fn){
+        File file = new File(fn);
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            try(FileOutputStream fos = new FileOutputStream(file);
+                    ObjectOutputStream oos = new ObjectOutputStream(fos)){
+                for (NhanVien nhanVien : listNhanVien) {
+                    oos.writeObject(nhanVien);
+                }
+            }
+            return "Ghi thành công";
+        } catch (Exception e) {
+            return "Ghi thất bại";
+        }
+    }
+    public String docFile(String fn){
+        File file = new File(fn);
+        try {
+            if (!file.exists()) {
+                return "File không tồn tại";
+            }
+            try(FileInputStream fis = new FileInputStream(file);
+                    ObjectInputStream ois = new ObjectInputStream(fis)){
+                while(fis.available() > 0){
+                    listNhanVien.add((NhanVien) ois.readObject());
+                }
+            }
+            return "Đọc thành công";
+        } catch (Exception e) {
+            return "Đọc thất bại";
+        }
     }
 
     Boolean addNhanVien(NhanVien nhanVien) {

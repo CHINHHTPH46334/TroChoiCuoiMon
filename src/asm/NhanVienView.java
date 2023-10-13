@@ -32,6 +32,7 @@ public class NhanVienView extends javax.swing.JFrame {
     QuanLyNhanVien quanLyNhanVien = new QuanLyNhanVien();
     private int i = -1;
     ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
+    private String fileName = "asm.txt";
 
     public NhanVienView() {
         initComponents();
@@ -140,12 +141,6 @@ public class NhanVienView extends javax.swing.JFrame {
         lblEmail.setText("Email");
         lblEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        txtMaNhanVien.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaNhanVienActionPerformed(evt);
-            }
-        });
-
         lblQuanLyNhanVien.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblQuanLyNhanVien.setText("Quản lý nhân viên");
 
@@ -159,21 +154,11 @@ public class NhanVienView extends javax.swing.JFrame {
                 btnDauMouseClicked(evt);
             }
         });
-        btnDau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDauActionPerformed(evt);
-            }
-        });
 
         btnCuoi.setText(">|");
         btnCuoi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCuoiMouseClicked(evt);
-            }
-        });
-        btnCuoi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCuoiActionPerformed(evt);
             }
         });
 
@@ -183,21 +168,11 @@ public class NhanVienView extends javax.swing.JFrame {
                 btnPrevMouseClicked(evt);
             }
         });
-        btnPrev.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPrevActionPerformed(evt);
-            }
-        });
 
         btnNext.setText(">>");
         btnNext.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnNextMouseClicked(evt);
-            }
-        });
-        btnNext.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNextActionPerformed(evt);
             }
         });
 
@@ -223,11 +198,6 @@ public class NhanVienView extends javax.swing.JFrame {
         btnNew.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnNewMouseClicked(evt);
-            }
-        });
-        btnNew.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewActionPerformed(evt);
             }
         });
 
@@ -409,75 +379,12 @@ public class NhanVienView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtMaNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaNhanVienActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMaNhanVienActionPerformed
-
-    private void btnDauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDauActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDauActionPerformed
-
-    private void btnCuoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuoiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCuoiActionPerformed
-
-    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPrevActionPerformed
-
-    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNextActionPerformed
-
-    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNewActionPerformed
-
     private void btnNewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewMouseClicked
         // TODO add your handling code here:
         clearForm();
         loadData(list);
     }//GEN-LAST:event_btnNewMouseClicked
 
-    public void ghiFile() throws IOException {
-        File file = new File("data.txt");
-        if (!file.exists()) {
-
-            //Kiểm tra sự tồn tại của file
-            file.createNewFile();//Tạo mới file
-
-        }
-
-        FileOutputStream fos = new FileOutputStream(file);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-//        ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
-        for (NhanVien nhanVien : list) {
-            oos.writeObject(nhanVien);
-        }
-        oos.close();
-        fos.close();
-    }
-
-    public void docFile() throws FileNotFoundException, IOException, ClassNotFoundException {
-        File file = new File("data.txt");
-        if (!file.exists()) {//Kiểm tra sự tồn tại của file
-            System.out.println("File này không tìm thấy");
-            return;
-        }
-        // Mo file
-        FileInputStream fis = new FileInputStream(file);
-        // Doc tung dong 
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        ArrayList<NhanVien> list = new ArrayList<>();
-        while (fis.available() > 0) {
-            list.add((NhanVien) ois.readObject());
-        }
-        ois.close();
-        fis.close();
-        loadData(list);
-
-    }
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
         // TODO add your handling code here:
         int i = tblNhanVien.getSelectedRow();
@@ -599,36 +506,25 @@ public class NhanVienView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFindMouseClicked
 
     private void btnOpenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOpenMouseClicked
-        try {
-            // TODO add your handling code here:
-//        ArrayList<NhanVien> list = quanLyNhanVien.getListNhanVien();
-            docFile();
-            loadData(list);
-            tblNhanVien.setRowSelectionInterval(0, 0);
-            txtMaNhanVien.setText(list.get(0).getMaNhanVien());
-            txtHoTen.setText(list.get(0).getHoVaTen());
-            txtEmail.setText(list.get(0).getEmail());
-            txtTuoi.setText(String.valueOf(list.get(0).getTuoi()));
-            txtLuong.setText(String.valueOf(list.get(0).getLuong()));
-            lblRecord.setText("Record: " + 1 + "/" + quanLyNhanVien.getListNhanVien().size());
-        } catch (IOException ex) {
-            Logger.getLogger(NhanVienView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(NhanVienView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
+        list.clear();
+        JOptionPane.showMessageDialog(this, quanLyNhanVien.docFile(fileName));
+        loadData(list);
+        String maNV = (String) tblNhanVien.getValueAt(0, 0);
+        txtMaNhanVien.setText(maNV);
+        String hoTen = (String) tblNhanVien.getValueAt(0, 1);
+        txtHoTen.setText(hoTen);
+        String tuoi = (String) tblNhanVien.getValueAt(0, 2);
+        txtTuoi.setText(tuoi);
+        String email = (String) tblNhanVien.getValueAt(0, 3);
+        txtEmail.setText(email);
+        Double luong = (Double) tblNhanVien.getValueAt(0, 4);
+        String luongNV = String.valueOf(luong);
+        txtLuong.setText(luongNV);
     }//GEN-LAST:event_btnOpenMouseClicked
 
     private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
-        try {
-            // TODO add your handling code here:
-            ghiFile();
-            System.exit(0);
-        } catch (IOException ex) {
-            Logger.getLogger(NhanVienView.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Lỗi khi ghi dữ liệu");
-        }
+        JOptionPane.showMessageDialog(this, quanLyNhanVien.ghiFile(fileName));
+        System.exit(0);
 
     }//GEN-LAST:event_btnExitMouseClicked
 
