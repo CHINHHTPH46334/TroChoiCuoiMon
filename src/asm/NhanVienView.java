@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -280,7 +281,7 @@ public class NhanVienView extends javax.swing.JFrame {
 
         lblRecord.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblRecord.setForeground(new java.awt.Color(255, 0, 0));
-        lblRecord.setText("Record:");
+        lblRecord.setText("Record: 1 of 10");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -397,16 +398,19 @@ public class NhanVienView extends javax.swing.JFrame {
         double luongNV;
         if (!luong.isEmpty()) {
             luongNV = Double.parseDouble(luong);
+
         } else {
             luongNV = 0;
         }
 
         Boolean checkmail = quanLyNhanVien.checkEmail(email);
 
-        if (maNV.isEmpty()
-                && (tuoiNV >= 16 && tuoiNV <= 55)
-                && luongNV > 5000000) {
+        if (maNV.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Xin nhập mã");
+        } else if (tuoiNV <= 16 || tuoiNV >= 55) {
+            JOptionPane.showMessageDialog(this, "Tuổi phải lớn hơn 16 và nhỏ hơn 55");
+        } else if (luongNV < 5000000) {
+            JOptionPane.showMessageDialog(this, "Nhập lương lớn hơn 5000000");
         } else if (!checkmail) {
             JOptionPane.showMessageDialog(this, "Sai định dạng email!");
         } else {
@@ -455,7 +459,7 @@ public class NhanVienView extends javax.swing.JFrame {
             }
         }
 
-        lblRecord.setText("Record: " + 1 + "/" + quanLyNhanVien.getListNhanVien().size());
+        lblRecord.setText("Record: " + 1 + " of " + quanLyNhanVien.getListNhanVien().size());
 
     }//GEN-LAST:event_btnSaveMouseClicked
 
@@ -506,20 +510,36 @@ public class NhanVienView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFindMouseClicked
 
     private void btnOpenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOpenMouseClicked
+
+        List<NhanVien> temp = new ArrayList<>();
+
         list.clear();
-        JOptionPane.showMessageDialog(this, quanLyNhanVien.docFile(fileName));
+        String result = quanLyNhanVien.docFile(fileName);
+        if (result.equals("Đọc thành công")) {
+            list = quanLyNhanVien.getListNhanVien();
+        } else {
+            list = (ArrayList<NhanVien>) temp;
+        }
+
+        JOptionPane.showMessageDialog(this, result);
+
         loadData(list);
-        String maNV = (String) tblNhanVien.getValueAt(0, 0);
-        txtMaNhanVien.setText(maNV);
-        String hoTen = (String) tblNhanVien.getValueAt(0, 1);
-        txtHoTen.setText(hoTen);
-        String tuoi = (String) tblNhanVien.getValueAt(0, 2);
-        txtTuoi.setText(tuoi);
-        String email = (String) tblNhanVien.getValueAt(0, 3);
-        txtEmail.setText(email);
-        Double luong = (Double) tblNhanVien.getValueAt(0, 4);
-        String luongNV = String.valueOf(luong);
-        txtLuong.setText(luongNV);
+        if (!list.isEmpty()) {
+            tblNhanVien.setRowSelectionInterval(0, 0);
+            String maNV = (String) tblNhanVien.getValueAt(0, 0);
+            txtMaNhanVien.setText(maNV);
+            String hoTen = (String) tblNhanVien.getValueAt(0, 1);
+            txtHoTen.setText(hoTen);
+            String tuoi = (String) tblNhanVien.getValueAt(0, 2);
+            txtTuoi.setText(tuoi);
+            String email = (String) tblNhanVien.getValueAt(0, 3);
+            txtEmail.setText(email);
+            Double luong = (Double) tblNhanVien.getValueAt(0, 4);
+            String luongNV = String.valueOf(luong);
+            txtLuong.setText(luongNV);
+            lblRecord.setText("Record: " + 1 + " of " + quanLyNhanVien.getListNhanVien().size());
+        }
+
     }//GEN-LAST:event_btnOpenMouseClicked
 
     private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
@@ -539,7 +559,7 @@ public class NhanVienView extends javax.swing.JFrame {
             txtEmail.setText(list.get(0).getEmail());
             txtTuoi.setText(String.valueOf(list.get(0).getTuoi()));
             txtLuong.setText(String.valueOf(list.get(0).getLuong()));
-            lblRecord.setText("Record: " + 1 + "/" + quanLyNhanVien.getListNhanVien().size());
+            lblRecord.setText("Record: " + 1 + " of " + quanLyNhanVien.getListNhanVien().size());
         }
     }//GEN-LAST:event_btnDauMouseClicked
 
@@ -555,7 +575,7 @@ public class NhanVienView extends javax.swing.JFrame {
             txtEmail.setText(list.get(i).getEmail());
             txtTuoi.setText(String.valueOf(list.get(i).getTuoi()));
             txtLuong.setText(String.valueOf(list.get(i).getLuong()));
-            lblRecord.setText("Record: " + (i + 1) + "/" + quanLyNhanVien.getListNhanVien().size());
+            lblRecord.setText("Record: " + (i + 1) + " of " + quanLyNhanVien.getListNhanVien().size());
         }
 
     }//GEN-LAST:event_btnPrevMouseClicked
@@ -572,20 +592,27 @@ public class NhanVienView extends javax.swing.JFrame {
             txtEmail.setText(list.get(i).getEmail());
             txtTuoi.setText(String.valueOf(list.get(i).getTuoi()));
             txtLuong.setText(String.valueOf(list.get(i).getLuong()));
-            lblRecord.setText("Record: " + (i + 1) + "/" + quanLyNhanVien.getListNhanVien().size());
+            lblRecord.setText("Record: " + (i + 1) + " of " + quanLyNhanVien.getListNhanVien().size());
         }
 
     }//GEN-LAST:event_btnNextMouseClicked
 
     private void btnCuoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCuoiMouseClicked
         // TODO add your handling code here:
-        int i = tblNhanVien.getRowCount() - 1;
-        txtMaNhanVien.setText(list.get(i).getMaNhanVien());
-        txtHoTen.setText(list.get(i).getHoVaTen());
-        txtEmail.setText(list.get(i).getEmail());
-        txtTuoi.setText(String.valueOf(list.get(i).getTuoi()));
-        txtLuong.setText(String.valueOf(list.get(i).getLuong()));
-        lblRecord.setText("Record: " + (i + 1) + "/" + quanLyNhanVien.getListNhanVien().size());
+        int rowCount = tblNhanVien.getRowCount();
+        if (rowCount > 0) {
+            int i = rowCount - 1;
+            txtMaNhanVien.setText(list.get(i).getMaNhanVien());
+            txtHoTen.setText(list.get(i).getHoVaTen());
+            txtEmail.setText(list.get(i).getEmail());
+            txtTuoi.setText(String.valueOf(list.get(i).getTuoi()));
+            txtLuong.setText(String.valueOf(list.get(i).getLuong()));
+            tblNhanVien.setRowSelectionInterval(i, i);
+            lblRecord.setText("Record: " + (i + 1) + " of " + quanLyNhanVien.getListNhanVien().size());
+            
+        }
+
+
     }//GEN-LAST:event_btnCuoiMouseClicked
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
@@ -596,7 +623,7 @@ public class NhanVienView extends javax.swing.JFrame {
         txtEmail.setText(list.get(i).getEmail());
         txtTuoi.setText(String.valueOf(list.get(i).getTuoi()));
         txtLuong.setText(String.valueOf(list.get(i).getLuong()));
-        lblRecord.setText("Record: " + (i + 1) + "/" + quanLyNhanVien.getListNhanVien().size());
+        lblRecord.setText("Record: " + (i + 1) + " of " + quanLyNhanVien.getListNhanVien().size());
     }//GEN-LAST:event_tblNhanVienMouseClicked
 
 
