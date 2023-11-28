@@ -394,7 +394,13 @@ public class NhanVienView extends javax.swing.JFrame {
         String tuoi = txtTuoi.getText();
         String email = txtEmail.getText();
         String luong = txtLuong.getText();
-        Integer tuoiNV = Integer.parseInt(tuoi);
+        
+        Integer tuoiNV ;
+        if (!tuoi.isEmpty()) {
+            tuoiNV = Integer.parseInt(tuoi);
+        } else {
+            tuoiNV = 0;
+        }
         double luongNV;
         if (!luong.isEmpty()) {
             luongNV = Double.parseDouble(luong);
