@@ -125,17 +125,16 @@ public class QuanLyNhanVien {
         return matcher.matches();
     }
 
-    ArrayList<NhanVien> delete(String maNV) {
-        ArrayList<NhanVien> listSauKhiXoa = new ArrayList<>();
+    public ArrayList<NhanVien> delete(String maNV) {
         for (NhanVien nhanVien : listNhanVien) {
             if (nhanVien.getMaNhanVien().equals(maNV)) {
-                listSauKhiXoa.remove(nhanVien);
+                listNhanVien.remove(nhanVien);
             } else {
-                listSauKhiXoa.add(nhanVien);
+                listNhanVien.add(nhanVien);
             }
         }
 
-        return listSauKhiXoa;
+        return listNhanVien;
     }
 
 
